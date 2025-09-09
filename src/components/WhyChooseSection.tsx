@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import RiderRegistrationModal from "./RiderRegistrationModal";
 import six from "@/assets/66.svg";
 import nine from "@/assets/99.svg";
 import indicatorlong from "@/assets/indicatorlong.svg";
@@ -18,6 +19,7 @@ const WhyChooseSection = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isRiderModalOpen, setIsRiderModalOpen] = useState(false);
 
   const mainBenefits = [
     "Trusted by vendors, loved by users, and driven by reliable riders",
@@ -54,6 +56,14 @@ const WhyChooseSection = () => {
 
   const sections = [
     {
+      title: "Why Choose DashnDrop? | Riders",
+      subtitle: "Earn Fast. Deliver Easy.",
+      images: [why7, why8, why3],
+      benefits: riderBenefits,
+      showTestimonial: false,
+      ctaButton: "Register as a Rider"
+    },
+    {
       title: "Why Choose DashnDrop?",
       subtitle: "One App. Endless Possibilities.",
       images: [why1, why2, why3],
@@ -69,14 +79,7 @@ const WhyChooseSection = () => {
       showTestimonial: false,
       ctaButton: "Register as a Vendor"
     },
-    {
-      title: "Why Choose DashnDrop? | Riders",
-      subtitle: "Earn Fast. Deliver Easy.",
-      images: [why7, why8, why3],
-      benefits: riderBenefits,
-      showTestimonial: false,
-      ctaButton: "Register as a Rider"
-    }
+   
   ];
 
   const nextTestimonial = () => {
@@ -99,18 +102,18 @@ const WhyChooseSection = () => {
     setCurrentSection((prev) => (prev - 1 + sections.length) % sections.length);
   };
 
-  // Auto-cycling functionality for sections
+  
   useEffect(() => {
     if (isPaused) return;
     
     const interval = setInterval(() => {
       nextSection();
-    }, 6000); // Change every 6 seconds (longer for content reading)
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [isPaused, currentSection]);
 
-  // Reset animation state after transition
+  
   useEffect(() => {
     if (isAnimating) {
       const timer = setTimeout(() => setIsAnimating(false), 300);
@@ -126,7 +129,7 @@ const WhyChooseSection = () => {
     >
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column - Text and Content */}
+         
           <div className="space-y-8">
             <div className={`transition-all duration-300 ease-in-out ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               <h2 className="text-4xl lg:text-4xl font-bold text-foreground mb-6 relative">
@@ -144,7 +147,7 @@ const WhyChooseSection = () => {
               </p>
             </div>
 
-            {/* Bullet Points */}
+           
             <div className={`space-y-4 transition-all duration-300 ease-in-out delay-100 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               {sections[currentSection].benefits.map((benefit, index) => (
                 <div 
@@ -158,11 +161,11 @@ const WhyChooseSection = () => {
               ))}
             </div>
 
-            {/* Testimonial Section - Only for first section */}
+           
             
             {sections[currentSection].showTestimonial && (
               <div className={`relative transition-all duration-300 ease-in-out delay-200 ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-                {/* Opening Quote Mark (66) */}
+              
                 <div className="absolute -top-8 -left-4 w-16 h-16 flex items-center justify-center z-10 ">
                   <img
                     src={six}
@@ -206,6 +209,12 @@ const WhyChooseSection = () => {
               }}
                 variant="secondary" 
                 className=" text-white hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 px-8 py-6 text-lg rounded-lg flex items-center gap-3"
+                onClick={() => {
+                  if (sections[currentSection].ctaButton === "Register as a Rider") {
+                    setIsRiderModalOpen(true);
+                  }
+                 
+                }}
               >
                
                
@@ -258,12 +267,7 @@ const WhyChooseSection = () => {
               />
             </div>
 
-            {/* Debug info - remove this later */}
-            {/* <div className="text-xs text-gray-500 mt-2 text-center">
-              Section: {currentSection + 1} | Images: {sections[currentSection].images.map((img, i) => `img${i+1}`).join(', ')}
-            </div> */}
-
-            {/* Section Navigation Arrows */}
+         
             <div className={`flex items-center justify-center space-x-4 mt-6 transition-all duration-300 ease-in-out delay-200 ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
               <Button
                 variant="outline"
@@ -287,6 +291,12 @@ const WhyChooseSection = () => {
           </div>
         </div>
       </div>
+      
+     
+      <RiderRegistrationModal 
+        isOpen={isRiderModalOpen}
+        onClose={() => setIsRiderModalOpen(false)}
+      />
     </section>
   );
 };
