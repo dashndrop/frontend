@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Eye, EyeOff, User, Mail, Phone, Lock, Car, Hash } from "lucide-react";
+import { X, Eye, EyeOff, User, Mail, Phone, Lock, Car, Hash, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,7 +18,8 @@ const RiderRegistrationModal = ({ isOpen, onClose }: RiderRegistrationModalProps
     password: "",
     confirm_password: "",
     vehicle_type: "",
-    vehicle_number: ""
+    vehicle_number: "",
+    area_of_operation: ""
   });
   
   const [showPassword, setShowPassword] = useState(false);
@@ -57,6 +58,7 @@ const RiderRegistrationModal = ({ isOpen, onClose }: RiderRegistrationModalProps
     "Motorcycle",
     "Bicycle", 
   ];
+
 
   // Test function to check API endpoint (remove this in production)
   const testAPIEndpoint = async () => {
@@ -149,6 +151,10 @@ const RiderRegistrationModal = ({ isOpen, onClose }: RiderRegistrationModalProps
       newErrors.vehicle_number = "Vehicle number is required";
     }
 
+    if (!formData.area_of_operation) {
+      newErrors.area_of_operation = "Area of operation is required";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -214,7 +220,8 @@ const RiderRegistrationModal = ({ isOpen, onClose }: RiderRegistrationModalProps
           password: "",
           confirm_password: "",
           vehicle_type: "",
-          vehicle_number: ""
+          vehicle_number: "",
+          area_of_operation: ""
         });
         
        
@@ -262,7 +269,8 @@ const RiderRegistrationModal = ({ isOpen, onClose }: RiderRegistrationModalProps
         password: "",
         confirm_password: "",
         vehicle_type: "",
-        vehicle_number: ""
+        vehicle_number: "",
+        area_of_operation: ""
       });
       setErrors({});
       setSuccess(false);
@@ -476,6 +484,26 @@ const RiderRegistrationModal = ({ isOpen, onClose }: RiderRegistrationModalProps
                   />
                 </div>
                 {errors.vehicle_number && <p className="text-sm text-red-600">{errors.vehicle_number}</p>}
+              </div>
+
+              {/* Area of Operation */}
+              <div className="space-y-2">
+                <Label htmlFor="area_of_operation" className="text-sm font-medium text-gray-700">
+                  Area of Operation
+                </Label>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Input
+                    id="area_of_operation"
+                    type="text"
+                    placeholder="Enter your preferred area (e.g., Victoria Island, Lekki)"
+                    value={formData.area_of_operation}
+                    onChange={(e) => handleInputChange("area_of_operation", e.target.value)}
+                    className={`pl-10 ${errors.area_of_operation ? 'border-red-500' : ''}`}
+                    disabled={isLoading}
+                  />
+                </div>
+                {errors.area_of_operation && <p className="text-sm text-red-600">{errors.area_of_operation}</p>}
               </div>
 
              
