@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RiderRegistrationModal from "./RiderRegistrationModal";
@@ -20,6 +20,7 @@ const WhyChooseSection = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isRiderModalOpen, setIsRiderModalOpen] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const mainBenefits = [
     "Trusted by vendors, loved by users, and driven by reliable riders",
@@ -90,36 +91,46 @@ const WhyChooseSection = () => {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const nextSection = () => {
+  const nextSection = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentSection((prev) => (prev + 1) % sections.length);
-  };
+    setTimeout(() => setIsAnimating(false), 300);
+  }, [isAnimating, sections.length]);
 
-  const prevSection = () => {
+  const prevSection = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentSection((prev) => (prev - 1 + sections.length) % sections.length);
-  };
+    setTimeout(() => setIsAnimating(false), 300);
+  }, [isAnimating, sections.length]);
 
-  
+  // Auto-scroll with improved performance
   useEffect(() => {
+    // Clear existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    // Don't start interval if paused
     if (isPaused) return;
     
-    const interval = setInterval(() => {
-      nextSection();
-    }, 6000);
+    // Start new interval
+    intervalRef.current = setInterval(() => {
+      setCurrentSection((prev) => {
+        const next = (prev + 1) % sections.length;
+        setIsAnimating(true);
+        setTimeout(() => setIsAnimating(false), 300);
+        return next;
+      });
+    }, 3000);
 
-    return () => clearInterval(interval);
-  }, [isPaused, currentSection]);
-
-  
-  useEffect(() => {
-    if (isAnimating) {
-      const timer = setTimeout(() => setIsAnimating(false), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isAnimating]);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isPaused, sections.length]);
 
   return (
     <section 

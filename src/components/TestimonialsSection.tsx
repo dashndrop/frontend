@@ -1,19 +1,19 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import indicatorSvg2 from "@/assets/indicator2.svg";
 import six from "@/assets/66.svg";
 import nine from "@/assets/99.svg";
 import testimonials1 from "@/assets/testimonial1.svg";
 import testimonials2 from "@/assets/testimonial2.svg";
 import testimonials3 from "@/assets/testimonial3.svg";
-import React from "react";
 
 const TestimonialsSection = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const testimonials = [
     {
@@ -33,36 +33,46 @@ const TestimonialsSection = () => {
     }
   ];
 
-  const nextTestimonial = () => {
+  const nextTestimonial = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  };
+    setTimeout(() => setIsAnimating(false), 300);
+  }, [isAnimating, testimonials.length]);
 
-  const prevTestimonial = () => {
+  const prevTestimonial = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+    setTimeout(() => setIsAnimating(false), 300);
+  }, [isAnimating, testimonials.length]);
 
-  // Auto-cycling functionality
-  React.useEffect(() => {
+  // Auto-cycling with improved performance
+  useEffect(() => {
+    // Clear existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    // Don't start interval if paused
     if (isPaused) return;
     
-    const interval = setInterval(() => {
-      nextTestimonial();
-    }, 5000); // Change every 5 seconds
+    // Start new interval
+    intervalRef.current = setInterval(() => {
+      setCurrentTestimonial((prev) => {
+        const next = (prev + 1) % testimonials.length;
+        setIsAnimating(true);
+        setTimeout(() => setIsAnimating(false), 300);
+        return next;
+      });
+    }, 3000); // Change every 3 seconds
 
-    return () => clearInterval(interval);
-  }, [isPaused, currentTestimonial]);
-
-  // Reset animation state after transition
-  React.useEffect(() => {
-    if (isAnimating) {
-      const timer = setTimeout(() => setIsAnimating(false), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isAnimating]);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isPaused, testimonials.length]);
 
   return (
     <section 
