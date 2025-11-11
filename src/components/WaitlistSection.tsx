@@ -21,8 +21,8 @@ const WaitlistSection = () => {
     seconds: 0
   });
 
-  // Set target launch date to January 1st, 2026
-  const targetDate = new Date('2026-01-01T00:00:00');
+  // Set target launch date to January 12th, 2026
+  const targetDate = new Date('2026-01-12T00:00:00');
 
   useEffect(() => {
     const calculateTimeLeft = () => {
