@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Play, Apple } from "lucide-react";
 import { useState, useEffect } from "react";
+import LazyImage from "@/components/LazyImage";
 import deliveryHero from "@/assets/deliveryhero.png";
 import backgroundSvg from "@/assets/background.svg";
 import boxSvg from "@/assets/box.svg";
@@ -56,10 +57,11 @@ const HeroSection = () => {
             <div className={`mb-8 transition-all duration-700 ease-out delay-300 ${
               isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
             }`}>
-              <img 
+              <LazyImage 
                 src={changeImages[currentImageIndex]} 
                 alt="Box icon" 
                 className="transition-all duration-500 ease-in-out"
+                loading="eager"
                 style={{
                   maxWidth: '150%',
                 }}
@@ -91,12 +93,12 @@ const HeroSection = () => {
                 variant="secondary" 
                 className=" text-white hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 px-8 py-6 text-lg rounded-lg flex items-center gap-3"
               >
-                <img 
-                src={playstore} 
-                alt="playstore icon" 
-                
-               
-              />
+                <LazyImage 
+                  src={playstore} 
+                  alt="playstore icon" 
+                  className="w-6 h-6"
+                  loading="eager"
+                />
                 Download on Playstore
               </Button>
               <Button 
@@ -110,9 +112,11 @@ const HeroSection = () => {
                 variant="secondary" 
                 className=" text-white hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 px-8 py-6 text-lg rounded-lg flex items-center gap-3"
               >
-                <img 
-                src={appstore} 
-                alt="appstore icon" 
+                <LazyImage 
+                  src={appstore} 
+                  alt="appstore icon" 
+                  className="w-6 h-6"
+                  loading="eager"
                 />
                 Download on Appstore
               </Button>
@@ -128,10 +132,11 @@ const HeroSection = () => {
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-8 bg-black/20 rounded-full blur-lg"></div>
               
               {/* Scooter Image */}
-              <img 
+              <LazyImage 
                 src={deliveryHero} 
                 alt="Delivery person on scooter"
                 className="w-full h-auto max-w-none lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl relative z-10"
+                loading="eager"
                 style={{
                   transform: 'translateY(30%)',
                   filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))'

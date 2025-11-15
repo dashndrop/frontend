@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import LazyImage from "./LazyImage";
 import phoneApp from "@/assets/handandphone.svg";
 import qrcode from "@/assets/qr.svg";
 
@@ -14,10 +15,11 @@ const AppDownloadSection = () => {
             <div className="w-80 h-80 bg-orange-100 rounded-full absolute -top-20 -left-20 opacity-50"></div>
             <div className="w-60 h-60 bg-primary/20 rounded-full absolute top-32 left-48 opacity-50"></div>
             <div className="absolute bottom-0 left-0 right-0">
-              <img 
+              <LazyImage 
                 src={phoneApp} 
                 alt="DashDrop mobile app"
                 className="w-full h-auto"
+                loading="lazy"
               />
             </div>
           </div>
@@ -52,9 +54,11 @@ const AppDownloadSection = () => {
                 variant="secondary" 
                 className=" text-white hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 px-8 py-6 text-lg rounded-lg flex items-center gap-3"
               >
-                <img 
+                <LazyImage 
                   src={playstore} 
                   alt="playstore icon" 
+                  className="w-6 h-6"
+                  loading="lazy"
                 />
                 Download on Playstore
               </Button>
@@ -68,9 +72,11 @@ const AppDownloadSection = () => {
                 variant="secondary" 
                 className=" text-white hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 px-8 py-6 text-lg rounded-lg flex items-center gap-3"
               >
-                <img 
+                <LazyImage 
                   src={appstore} 
                   alt="appstore icon" 
+                  className="w-6 h-6"
+                  loading="lazy"
                 />
                 Download on Appstore
               </Button>
@@ -82,10 +88,11 @@ const AppDownloadSection = () => {
               </p>
               <div className="flex justify-center">
                 <div className=" flex items-center justify-center">
-                  <img 
+                  <LazyImage 
                     src={qrcode} 
                     alt="QR code" 
                     className=""
+                    loading="lazy"
                   />
                 </div>
               </div>

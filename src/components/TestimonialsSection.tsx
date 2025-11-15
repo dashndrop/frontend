@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
+import LazyImage from "./LazyImage";
 import indicatorSvg2 from "@/assets/indicator2.svg";
 import six from "@/assets/66.svg";
 import nine from "@/assets/99.svg";
@@ -135,10 +136,11 @@ const TestimonialsSection = () => {
               ></div>
               
               {/* Main image */}
-              <img 
+              <LazyImage 
                 src={testimonials[currentTestimonial].image} 
                 alt="Happy DashDrop user"
                 className={`w-full max-w-sm mx-auto rounded-2xl relative z-10 shadow-2xl transition-all duration-500 ease-in-out ${isAnimating ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'}`}
+                loading="lazy"
               />
             </div>
           </div>

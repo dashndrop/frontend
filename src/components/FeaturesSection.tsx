@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import LazyImage from "./LazyImage";
 import Track1 from "@/assets/Track 1.svg";
 import Track2 from "@/assets/Track 2.svg";
 import Track3 from "@/assets/Track 3.svg";
@@ -228,10 +229,11 @@ const FeaturesSection = () => {
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
             DashnDrop Features
           </h2>
-          <img 
+          <LazyImage 
             src={indicatorwhite} 
             alt="Active indicator" 
             className="mx-auto w-48"
+            loading="lazy"
           />
         </div>
         </div>
@@ -266,10 +268,11 @@ const FeaturesSection = () => {
             >
               {/* Phone mockup */}
           <div className="relative">
-            <img 
+            <LazyImage 
                   src={feature.phoneImage} 
                   alt={feature.title}
                   className="w-full h-auto mx-auto transition-all duration-200 ease-out"
+                  loading="lazy"
                   style={{ willChange: 'transform' }}
                 />
                 

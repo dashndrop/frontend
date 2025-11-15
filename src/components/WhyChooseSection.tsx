@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RiderRegistrationModal from "./RiderRegistrationModal";
+import LazyImage from "./LazyImage";
 import six from "@/assets/66.svg";
 import nine from "@/assets/99.svg";
 import indicatorlong from "@/assets/indicatorlong.svg";
@@ -242,39 +243,30 @@ const WhyChooseSection = () => {
            
             <div className={`flex gap-4 mb-4 transition-all duration-500 ease-in-out ${isAnimating ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'}`}>
               <div className="w-1/2 aspect-square bg-gray-200 rounded-xl overflow-hidden shadow-lg">
-                <img 
+                <LazyImage 
                   src={sections[currentSection].images[0]} 
                   alt="Section image 1"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  onError={(e) => {
-                    console.error('Failed to load image:', sections[currentSection].images[0]);
-                    e.currentTarget.style.display = 'none';
-                  }}
+                  loading="lazy"
                 />
               </div>
               <div className="w-1/2 aspect-square bg-gray-200 rounded-xl overflow-hidden shadow-lg">
-                <img 
+                <LazyImage 
                   src={sections[currentSection].images[1]} 
                   alt="Section image 2"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  onError={(e) => {
-                    console.error('Failed to load image:', sections[currentSection].images[1]);
-                    e.currentTarget.style.display = 'none';
-                  }}
+                  loading="lazy"
                 />
               </div>
             </div>
             
             
             <div className={`w-full aspect-[2/1] bg-gray-200 rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-in-out delay-100 ${isAnimating ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'}`}>
-              <img 
+              <LazyImage 
                 src={sections[currentSection].images[2]} 
                 alt="Section image 3"
                 className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                onError={(e) => {
-                  console.error('Failed to load image:', sections[currentSection].images[2]);
-                  e.currentTarget.style.display = 'none';
-                }}
+                loading="lazy"
               />
             </div>
 
