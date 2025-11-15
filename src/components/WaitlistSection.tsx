@@ -142,11 +142,14 @@ const WaitlistSection = () => {
     return num.toString().padStart(2, '0');
   };
 
+  // Ensure the background image URL is properly resolved
+  const backgroundImageUrl = typeof waitlistBg === 'string' ? waitlistBg : (waitlistBg as any)?.src || waitlistBg;
+
   return (
     <section 
       className="relative py-20 lg:py-32 overflow-hidden"
       style={{
-        backgroundImage: `url(${waitlistBg})`,
+        backgroundImage: `url("${backgroundImageUrl}")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'

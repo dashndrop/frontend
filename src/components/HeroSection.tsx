@@ -32,6 +32,9 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, [changeImages.length]);
 
+  // Ensure the background SVG URL is properly resolved
+  const backgroundImageUrl = typeof backgroundSvg === 'string' ? backgroundSvg : (backgroundSvg as any)?.src || backgroundSvg;
+
   return (
     <section className="relative text-white overflow-visible">
       {/* Background SVG */}
@@ -40,10 +43,11 @@ const HeroSection = () => {
           isLoaded ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
-          backgroundImage: `url(${backgroundSvg})`,
+          backgroundImage: `url("${backgroundImageUrl}")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
+          zIndex: 0
         }}
       />
       
