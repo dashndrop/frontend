@@ -180,10 +180,8 @@ const RiderRegistrationModal = ({ isOpen, onClose }: RiderRegistrationModalProps
     setErrors({});
 
     try {
-      // Use proxy in development, direct URL in production
-      const url = import.meta.env.DEV 
-        ? '/api/v1/riders/register' 
-        : 'https://dashndrop.onrender.com/api/v1/riders/register';
+      // Use relative path in both dev and production (proxy will handle routing)
+      const url = '/api/v1/riders/register';
       const headers = {
         'Content-Type': 'application/json',
         'client-id': 'rider',

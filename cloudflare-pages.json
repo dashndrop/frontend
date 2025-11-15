@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://dashndrop.onrender.com/api/:path*",
+      "permanent": false
+    }
+  ]
+}
+

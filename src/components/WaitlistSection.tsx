@@ -9,9 +9,10 @@ import instagram from "@/assets/instagram.svg";
 
 const WaitlistSection = () => {
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [successData, setSuccessData] = useState<{ email: string; created_at: string } | null>(null);
+  const [successData, setSuccessData] = useState<{ email: string; phone?: string; created_at: string } | null>(null);
   const [error, setError] = useState("");
 
   // Countdown timer state
@@ -49,8 +50,7 @@ const WaitlistSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!email) {
+    if (!email.trim()) {
       setError("Please enter your email");
       return;
     }
@@ -60,15 +60,29 @@ const WaitlistSection = () => {
       return;
     }
 
+    if (!phone.trim()) {
+      setError("Please enter your phone number");
+      return;
+    }
+
+    if (!/^[0-9()+\-.\s]{7,20}$/.test(phone.trim())) {
+      setError("Please enter a valid phone number");
+      return;
+    }
+
     setIsSubmitting(true);
     setError("");
 
     try {
-      const endpoint = import.meta.env.DEV
-        ? "/api/v1/restaurants/waitlist"
-        : "https://dashndrop.onrender.com/api/v1/restaurants/waitlist";
+      // Use relative path in both dev and production (proxy will handle routing)
+      const endpoint = "/api/v1/restaurants/waitlist";
 
-      const url = `${endpoint}?email=${encodeURIComponent(email)}`;
+      const searchParams = new URLSearchParams({
+        email: email.trim(),
+        phone: phone.trim(),
+      });
+
+      const url = `${endpoint}?${searchParams.toString()}`;
 
       const response = await fetch(url, {
         method: "POST",
@@ -101,10 +115,12 @@ const WaitlistSection = () => {
 
       setSuccessData({
         email: data.email ?? email,
+        phone: data.phone ?? phone,
         created_at: data.created_at ?? new Date().toISOString(),
       });
       setSubmitSuccess(true);
       setEmail("");
+      setPhone("");
 
       setTimeout(() => {
         setSubmitSuccess(false);
@@ -215,6 +231,11 @@ const WaitlistSection = () => {
                     <p>
                       <strong>Email:</strong> {successData.email}
                     </p>
+                    {successData.phone && (
+                      <p>
+                        <strong>Phone:</strong> {successData.phone}
+                      </p>
+                    )}
                     <p>
                       <strong>Joined:</strong> {new Date(successData.created_at).toLocaleString()}
                     </p>
@@ -224,13 +245,25 @@ const WaitlistSection = () => {
             ) : (
               <form onSubmit={handleSubmit} className="mb-8">
                 {/* Combined Input and Button */}
-                <div className="flex bg-white rounded-none shadow-lg overflow-hidden">
+                <div className="flex flex-col md:flex-row bg-white rounded-none shadow-lg overflow-hidden">
                   <Input
                     type="email"
                     placeholder="Write Email Here...."
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
+                      setError("");
+                    }}
+                    className="flex-1 h-16 px-6 text-lg bg-white border-0 focus:ring-0 focus:outline-none rounded-none"
+                    disabled={isSubmitting}
+                  />
+                  <div className="h-px w-full bg-gray-200 md:h-auto md:w-px md:bg-gray-200" />
+                  <Input
+                    type="tel"
+                    placeholder="Phone Number"
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
                       setError("");
                     }}
                     className="flex-1 h-16 px-6 text-lg bg-white border-0 focus:ring-0 focus:outline-none rounded-none"
