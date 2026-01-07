@@ -44,37 +44,37 @@ const AppDownloadSection = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                style={{
-                  borderRadius: "1px",
+            <Button 
+              style={{
+                borderRadius: "1px",
                   background: "#0C0C0C",
-                  padding: "32px",
-                  color: "white",
-                }}
+                padding: "32px",
+                color: "white",
+              }}
                 variant="secondary" 
                 className=" text-white hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 px-8 py-6 text-lg rounded-lg flex items-center gap-3"
               >
                 <LazyImage 
-                  src={playstore} 
-                  alt="playstore icon" 
+                src={playstore} 
+                alt="playstore icon" 
                   className="w-6 h-6"
                   loading="lazy"
-                />
+              />
                 Download on Playstore
               </Button>
               <Button 
-                style={{
-                  borderRadius: "1px",
+              style={{
+                borderRadius: "1px",
                   background: "#0C0C0C",
-                  padding: "32px",
+                padding: "32px",
                   color: "#FFFFFF",
-                }}
+              }}
                 variant="secondary" 
                 className=" text-white hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 px-8 py-6 text-lg rounded-lg flex items-center gap-3"
               >
                 <LazyImage 
-                  src={appstore} 
-                  alt="appstore icon" 
+                src={appstore} 
+                alt="appstore icon" 
                   className="w-6 h-6"
                   loading="lazy"
                 />

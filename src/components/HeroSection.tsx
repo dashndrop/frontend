@@ -131,14 +131,14 @@ const HeroSection = () => {
           <div className={`relative order-2 lg:order-2 lg:flex lg:justify-end transition-all duration-700 ease-out delay-600 ${
             isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
           }`}>
-            <div className="relative">
+          <div className="relative">
               {/* Shadow */}
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-8 bg-black/20 rounded-full blur-lg"></div>
               
               {/* Scooter Image */}
               <LazyImage 
-                src={deliveryHero} 
-                alt="Delivery person on scooter"
+              src={deliveryHero} 
+              alt="Delivery person on scooter"
                 className="w-full h-auto max-w-none lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl relative z-10"
                 loading="eager"
                 style={{

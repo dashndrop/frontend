@@ -21,24 +21,25 @@ const WhyChooseSection = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isRiderModalOpen, setIsRiderModalOpen] = useState(false);
+  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const mainBenefits = [
-    "Trusted by vendors, loved by users, and driven by reliable riders",
+    "Trusted by vendors, loved by users, and driven by reliable riders.",
     "Consistent earnings for riders, zero listing fees for vendors, and fast delivery for users.",
     "We're building a local ecosystem — not just a service."
   ];
 
   const vendorBenefits = [
-    "Get your store online in minutes",
-    "Access marketing tools and analytics",
-    "On-time payments and dedicated support"
+    "Get your store online in minutes.",
+    "Access marketing tools and analytics.",
+    "On-time payments and dedicated support."
   ];
 
   const riderBenefits = [
-    "Flexible hours",
-    "Low commission cuts", 
-    "Get paid weekly or instantly"
+    "Flexible hours.",
+    "Low commission cuts.", 
+    "Get paid weekly or instantly."
   ];
 
   const testimonials = [
@@ -83,6 +84,35 @@ const WhyChooseSection = () => {
     },
    
   ];
+
+  // Preload all images when component mounts
+  useEffect(() => {
+    const allImages: string[] = [];
+    sections.forEach(section => {
+      section.images.forEach(img => allImages.push(img));
+    });
+    // Also preload decorative images
+    allImages.push(six, nine, indicatorlong);
+
+    const preloadImage = (src: string) => {
+      return new Promise<void>((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          setPreloadedImages(prev => new Set(prev).add(src));
+          resolve();
+        };
+        img.onerror = () => {
+          // Still mark as attempted to avoid retries
+          setPreloadedImages(prev => new Set(prev).add(src));
+          resolve();
+        };
+        img.src = src;
+      });
+    };
+
+    // Preload all images
+    Promise.all(allImages.map(preloadImage)).catch(console.error);
+  }, []);
 
   const nextTestimonial = () => {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
@@ -148,17 +178,18 @@ const WhyChooseSection = () => {
                 <span className="relative z-10">
                   {sections[currentSection].title}
                 </span>
-                <img
+                <LazyImage
                   src={indicatorlong}
                   alt="Title underline"
                   className="absolute -bottom-2 left-0 w-90 h-auto z-0"
+                  loading="eager"
                 />
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
                 {sections[currentSection].subtitle}
               </p>
             </div>
-
+            
            
             <div className={`space-y-4 transition-all duration-300 ease-in-out delay-100 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               {sections[currentSection].benefits.map((benefit, index) => (
@@ -172,17 +203,18 @@ const WhyChooseSection = () => {
                 </div>
               ))}
             </div>
-
+            
            
             
             {sections[currentSection].showTestimonial && (
               <div className={`relative transition-all duration-300 ease-in-out delay-200 ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
               
                 <div className="absolute -top-8 -left-4 w-16 h-16 flex items-center justify-center z-10 ">
-                  <img
+                  <LazyImage
                     src={six}
                     alt="Opening quote mark"
                     className="w-16 h-16"
+                    loading="eager"
                   />
                 </div>
 
@@ -190,18 +222,19 @@ const WhyChooseSection = () => {
                 <div className="p-6 ml-8">
                   <p className="text-lg text-foreground mb-4 italic leading-relaxed text-center">
                     "{testimonials[currentTestimonial].quote}"
-                  </p>
+                    </p>
                   <p className="text-sm text-muted-foreground text-center">
                     — {testimonials[currentTestimonial].author}
-                  </p>
-                </div>
+                    </p>
+                  </div>
 
                
                 <div className="absolute -bottom-8 -right-4 w-16 h-16 flex items-center justify-center z-10">
-                  <img
+                  <LazyImage
                     src={nine}
                     alt="Closing quote mark"
                     className="w-16 h-16"
+                    loading="eager"
                   />
                 </div>
               </div>
@@ -234,28 +267,30 @@ const WhyChooseSection = () => {
                {sections[currentSection].ctaButton}
               </Button>
                
-              </div>
+            </div>
             )}
           </div>
-
+          
          
           <div className="relative">
            
             <div className={`flex gap-4 mb-4 transition-all duration-500 ease-in-out ${isAnimating ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'}`}>
               <div className="w-1/2 aspect-square bg-gray-200 rounded-xl overflow-hidden shadow-lg">
                 <LazyImage 
+                  key={`${currentSection}-0`}
                   src={sections[currentSection].images[0]} 
                   alt="Section image 1"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  loading="lazy"
+                  loading="eager"
                 />
               </div>
               <div className="w-1/2 aspect-square bg-gray-200 rounded-xl overflow-hidden shadow-lg">
                 <LazyImage 
+                  key={`${currentSection}-1`}
                   src={sections[currentSection].images[1]} 
                   alt="Section image 2"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  loading="lazy"
+                  loading="eager"
                 />
               </div>
             </div>
@@ -263,12 +298,13 @@ const WhyChooseSection = () => {
             
             <div className={`w-full aspect-[2/1] bg-gray-200 rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-in-out delay-100 ${isAnimating ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'}`}>
               <LazyImage 
+                key={`${currentSection}-2`}
                 src={sections[currentSection].images[2]} 
                 alt="Section image 3"
                 className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                loading="lazy"
-              />
-            </div>
+                loading="eager"
+                />
+              </div>
 
          
             <div className={`flex items-center justify-center space-x-4 mt-6 transition-all duration-300 ease-in-out delay-200 ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>

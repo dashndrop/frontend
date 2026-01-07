@@ -36,7 +36,7 @@ const Contact = () => {
                 Contact Us
               </h1>
               <p className="text-gray-300 text-lg mb-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                We are here to help you with any questions you may have. Please feel free to contact us using the form below.
               </p>
               {/* <Button className="bg-gray-700 text-white hover:bg-gray-600 px-8 py-3">
                 Chat with us

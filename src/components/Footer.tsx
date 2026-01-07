@@ -39,9 +39,6 @@ const Footer = () => {
           <span>|</span>
           <span>Terms of Service</span>
           <span>|</span>
-          <span>Lorem Ipsum</span>
-          <span>|</span>
-          <span>Lorem Ipsum</span>
         </div>
       </div>
       <div className="bg-primary py-4">

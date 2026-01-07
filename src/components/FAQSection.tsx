@@ -114,7 +114,7 @@ const FAQSection = () => {
             {/* Description */}
             <div>
               <p className="text-lg text-gray-700 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at dapibus elit, in cursus eros.
+                We are here to help you with any questions you may have. Please feel free to contact us using the form below.
               </p>
             </div>
 

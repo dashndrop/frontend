@@ -12,7 +12,7 @@ const ContactSection = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
               We're here for Users, Vendors & Riders alike.
             </h2>
-            <p className="text-gray-600">Lorem ipsum dolor expensive.</p>
+            <p className="text-gray-600">We are here to help you with any questions you may have. Please feel free to contact us using the form below.</p>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ const ContactSection = () => {
             <div className="relative z-10 space-y-8">
               <div>
                 <h3 className="text-2xl font-bold text-white mb-2">Contact Information</h3>
-                <p className="text-orange-100">Lorem ipsum dolor expensive.</p>
+                <p className="text-orange-100">We are here to help you with any questions you may have. Please feel free to contact us using the form below.</p>
               </div>
               
               <div className="space-y-6">

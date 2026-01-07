@@ -105,7 +105,7 @@ const Header = () => {
             className="relative font-medium transition-colors"
           >
             <span className={location.pathname === "/contact" ? "text-primary" : "text-muted-foreground hover:text-foreground"}>
-              CONTACT US
+            CONTACT US
             </span>
             {location.pathname === "/contact" && (
               <img 

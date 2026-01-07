@@ -14,6 +14,7 @@ const TestimonialsSection = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const testimonials = [
@@ -33,6 +34,35 @@ const TestimonialsSection = () => {
       author: "Kelechi A., DashnDrop Rider"
     }
   ];
+
+  // Preload all images when component mounts
+  useEffect(() => {
+    const allImages: string[] = [];
+    testimonials.forEach(testimonial => {
+      allImages.push(testimonial.image);
+    });
+    // Also preload decorative images
+    allImages.push(six, nine, indicatorSvg2);
+
+    const preloadImage = (src: string) => {
+      return new Promise<void>((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          setPreloadedImages(prev => new Set(prev).add(src));
+          resolve();
+        };
+        img.onerror = () => {
+          // Still mark as attempted to avoid retries
+          setPreloadedImages(prev => new Set(prev).add(src));
+          resolve();
+        };
+        img.src = src;
+      });
+    };
+
+    // Preload all images
+    Promise.all(allImages.map(preloadImage)).catch(console.error);
+  }, []);
 
   const nextTestimonial = useCallback(() => {
     if (isAnimating) return;
@@ -112,11 +142,12 @@ const TestimonialsSection = () => {
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Trusted by Thousands of Happy Users
           </h2>
-          <img 
-            src={indicatorSvg2} 
-            alt="Active indicator" 
-            className="mx-auto w-200"
-          />
+          <LazyImage 
+                src={indicatorSvg2} 
+                alt="Active indicator" 
+                className="mx-auto w-200"
+                loading="eager"
+              />
         </div>
         
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -137,11 +168,12 @@ const TestimonialsSection = () => {
               
               {/* Main image */}
               <LazyImage 
+                key={currentTestimonial}
                 src={testimonials[currentTestimonial].image} 
-                alt="Happy DashDrop user"
+              alt="Happy DashDrop user"
                 className={`w-full max-w-sm mx-auto rounded-2xl relative z-10 shadow-2xl transition-all duration-500 ease-in-out ${isAnimating ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'}`}
-                loading="lazy"
-              />
+                loading="eager"
+            />
             </div>
           </div>
           
@@ -158,10 +190,11 @@ const TestimonialsSection = () => {
             <div className={`relative transition-all duration-500 ease-in-out delay-200 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               {/* Opening Quote Mark (66) */}
               <div className="absolute -top-8 -left-4 w-16 h-16 flex items-center justify-center z-10">
-                <img
+                <LazyImage
                   src={six}
                   alt="Opening quote mark"
                   className="w-16 h-16"
+                  loading="eager"
                 />
               </div>
 
@@ -169,20 +202,21 @@ const TestimonialsSection = () => {
               <div className="p-6 ml-8">
                 <p className="text-lg text-foreground mb-4 leading-relaxed">
                   {testimonials[currentTestimonial].quote}
-                </p>
+                    </p>
                 <p className="text-sm text-muted-foreground text-right">
                   — {testimonials[currentTestimonial].author}
-                </p>
-              </div>
+                    </p>
+                  </div>
 
               {/* Closing Quote Mark (99) */}
               <div className="absolute -bottom-8 -right-4 w-16 h-16 flex items-center justify-center z-10">
-                <img
+                <LazyImage
                   src={nine}
                   alt="Closing quote mark"
                   className="w-16 h-16"
+                  loading="eager"
                 />
-              </div>
+                </div>
             </div>
           </div>
         </div>

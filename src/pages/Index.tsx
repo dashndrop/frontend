@@ -19,14 +19,14 @@ const Index = () => {
       <Header />
       <HeroSection />
       <Suspense fallback={<div className="min-h-screen" />}>
-        <HowItWorksSection />
-        <FeaturesSection />
+      <HowItWorksSection />
+      <FeaturesSection />
         <WaitlistSection />
-        <WhyChooseSection />
-        <AppDownloadSection />
-        <TestimonialsSection />
-        <FAQSection />
-        <ContactSection />
+      <WhyChooseSection />
+      <AppDownloadSection />
+      <TestimonialsSection />
+      <FAQSection />
+      <ContactSection />
       </Suspense>
       <Footer />
     </div>

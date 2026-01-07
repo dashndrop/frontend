@@ -37,7 +37,7 @@ const FAQ = () => {
                 Frequently Asked Questions
               </h1>
               <p className="text-gray-300 text-lg">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                We are here to help you with any questions you may have. Please feel free to contact us using the form below.
               </p>
             </div>
             <div className="order-1 lg:order-2 mb-8 lg:mb-0">
