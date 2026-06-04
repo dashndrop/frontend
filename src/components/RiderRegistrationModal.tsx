@@ -530,11 +530,11 @@ const RiderRegistrationModal = ({ isOpen, onClose }: RiderRegistrationModalProps
              
               <p className="text-xs text-gray-500 text-center">
                 By registering, you agree to our{" "}
-                <a href="/terms" className="text-primary hover:underline">
+                <a href="/termsofservice" className="text-primary hover:underline">
                   Terms of Service
                 </a>{" "}
                 and{" "}
-                <a href="/privacy" className="text-primary hover:underline">
+                <a href="/privacypolicy" className="text-primary hover:underline">
                   Privacy Policy
                 </a>
               </p>

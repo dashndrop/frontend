@@ -4,6 +4,8 @@ import threads from "@/assets/threads.svg";
 import instagram from "@/assets/instagram.svg";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-[#111111] text-white">
      
@@ -31,13 +33,14 @@ const Footer = () => {
           <a href="/" className="text-gray-300 hover:text-white transition-colors">Home</a>
           <a href="/faq" className="text-gray-300 hover:text-white transition-colors">FAQs</a>
           <a href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</a>
+          <a href="/termsofservice" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a>
         </div>
         
        
         <div className="flex justify-center items-center space-x-4 text-xs text-gray-400">
-          <span>Privacy Policy</span>
+          <a href="/privacypolicy" className="hover:text-white transition-colors">Privacy Policy</a>
           <span>|</span>
-          <span>Terms of Service</span>
+          <a href="/termsofservice" className="hover:text-white transition-colors">Terms of Service</a>
           <span>|</span>
         </div>
       </div>
@@ -47,7 +50,7 @@ const Footer = () => {
             Delivering More Than Just Food
           </p>
           <p className="text-xs mt-1 opacity-90">
-            DASHNDROP© 2025 | ALL RIGHTS RESERVED
+            DASHNDROP© {currentYear} | ALL RIGHTS RESERVED
           </p>
         </div>
       </div>

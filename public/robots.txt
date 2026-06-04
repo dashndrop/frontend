@@ -20,7 +20,8 @@ Disallow: /static/
 Allow: /faq
 Allow: /contact
 Allow: /about
-Allow: /privacy
+Allow: /privacypolicy
+Allow: /termsofservice
 Allow: /terms
 
 # Block common files that don't need indexing

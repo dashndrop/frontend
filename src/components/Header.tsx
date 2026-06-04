@@ -101,6 +101,36 @@ const Header = () => {
             )}
           </Link>
           <Link 
+            to="/privacypolicy"
+            className="relative font-medium transition-colors"
+          >
+            <span className={location.pathname === "/privacypolicy" ? "text-primary" : "text-muted-foreground hover:text-foreground"}>
+              PRIVACY POLICY
+            </span>
+            {location.pathname === "/privacypolicy" && (
+              <img 
+                src={indicatorSvg} 
+                alt="Active indicator" 
+                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2"
+              />
+            )}
+          </Link>
+          <Link 
+            to="/termsofservice" 
+            className="relative font-medium transition-colors"
+          >
+            <span className={location.pathname === "/termsofservice" ? "text-primary" : "text-muted-foreground hover:text-foreground"}>
+              TERMS OF SERVICE
+            </span>
+            {location.pathname === "/termsofservice" && (
+              <img 
+                src={indicatorSvg} 
+                alt="Active indicator" 
+                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2"
+              />
+            )}
+          </Link>
+          <Link 
             to="/contact" 
             className="relative font-medium transition-colors"
           >
@@ -170,6 +200,8 @@ const Header = () => {
               {[
                 { path: "/", label: "Home" },
                 { path: "/faq", label: "FAQs" },
+                { path: "/privacypolicy", label: "Privacy Policy" },
+                { path: "/termsofservice", label: "Terms of Service" },
                 { path: "/contact", label: "Contact US" }
               ].map((item, index) => (
                 <Link 
