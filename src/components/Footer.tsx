@@ -42,6 +42,8 @@ const Footer = () => {
           <span>|</span>
           <a href="/termsofservice" className="hover:text-white transition-colors">Terms of Service</a>
           <span>|</span>
+          <a href="/deleteaccount" className="hover:text-white transition-colors">Delete Account</a>
+          <span>|</span>
         </div>
       </div>
       <div className="bg-primary py-4">
